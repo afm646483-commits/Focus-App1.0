@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -60,6 +61,16 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
+            Button(
+                onClick = { /* Aquí va la lógica de login */ },
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(top = 8.dp)
+            ) {
+                Text("Entrar")
+            }
+
+
         }
     }
 }
