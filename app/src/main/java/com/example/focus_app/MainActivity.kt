@@ -6,14 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.focus_app.ui.theme.FocusAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,29 +26,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FocusAppTheme {
-                AppNavigator()
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+                    MainScreen(modifier = Modifier.padding(innerPadding))
+                }
             }
         }
     }
 }
 
 @Composable
-fun AppNavigator() {
-    var currentScreen by remember { mutableStateOf("main") }  // 👈 control de pantalla actual
-
-    when (currentScreen) {
-        "main" -> MainScreen(onEntrarClick = { currentScreen = "login" }) // 👈 cambia a login
-        "login" -> PantallaLogin()
-    }
-}
-
-@Composable
-fun MainScreen(onEntrarClick: () -> Unit) {
+fun MainScreen(modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Imagen del logo (asegúrate que fa.jpg está en res/drawable)
             Image(
                 painter = painterResource(id = R.drawable.fa),
                 contentDescription = "Logo Focus App",
@@ -52,6 +54,7 @@ fun MainScreen(onEntrarClick: () -> Unit) {
                     .size(200.dp)
                     .padding(bottom = 16.dp)
             )
+            // Texto debajo del logo
             Text(
                 text = "Focus App",
                 fontSize = 28.sp,
@@ -59,13 +62,23 @@ fun MainScreen(onEntrarClick: () -> Unit) {
                 color = MaterialTheme.colorScheme.primary
             )
             Button(
-                onClick = onEntrarClick, // 👈 llama al cambio de pantalla
+                onClick = { /* Aquí va la lógica de login */ },
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(top = 8.dp)
             ) {
                 Text("Entrar")
             }
+
+
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MainScreenPreview() {
+    FocusAppTheme {
+        MainScreen()
     }
 }
