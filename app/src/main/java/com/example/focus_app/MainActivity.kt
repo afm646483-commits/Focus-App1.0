@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.focus_app.ui.theme.FocusAppTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,36 +28,29 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-@Composable
-fun iniciarTransicion( ) {
-   {
-        // Espera 7 segundos en la pantalla Splash
-        delay(7000)
-        navController.navigate("frases") {
-            popUpTo("splash") { inclusive = true }
-        }
-
-        // Espera 10 segundos en la pantalla de Frases
-        delay(10000)
-        navController.navigate("login") {
-            popUpTo("frases") { inclusive = true }
-        }
-
-}
 
 @Composable
 fun AppNavigator() {
-    var currentScreen by remember { mutableStateOf("main") }  // 👈 control de pantalla actual
+    var currentScreen by remember { mutableStateOf("main") }
+
+    // 👇 Control automático de transición
+    LaunchedEffect(Unit) {
+        delay(6000) // 10 segundos en Main
+        currentScreen = "frases"
+
+        delay(6000) // 10 segundos en Frases
+        currentScreen = "login"
+    }
 
     when (currentScreen) {
-        "main" -> MainScreen(onEntrarClick = { currentScreen = "login" }) // 👈 cambia a login
-        "login" -> PantallaLogin()
+        "main" -> MainScreen()
         "frases" -> FrasesScreen()
+        "login" -> PantallaLogin()
     }
 }
 
 @Composable
-fun MainScreen(onEntrarClick: () -> Unit) {
+fun MainScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -75,14 +69,12 @@ fun MainScreen(onEntrarClick: () -> Unit) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
-            Button(
-                onClick = onEntrarClick, // 👈 llama al cambio de pantalla
-                modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .padding(top = 8.dp)
-            ) {
-                Text("Entrar")
-            }
+            Text(
+                text = "Cargando...",
+                modifier = Modifier.padding(top = 12.dp),
+                fontSize = 18.sp
+            )
         }
     }
 }
+

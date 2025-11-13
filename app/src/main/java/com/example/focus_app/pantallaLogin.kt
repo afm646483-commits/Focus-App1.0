@@ -49,7 +49,7 @@ fun PantallaLogin() {
             )
 
             Button(
-                onClick = { /* lógica de login */ },
+                onClick = {  },
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(top = 8.dp)
