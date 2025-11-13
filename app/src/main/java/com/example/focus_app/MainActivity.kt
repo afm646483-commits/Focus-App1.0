@@ -27,6 +27,22 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+@Composable
+fun iniciarTransicion( ) {
+   {
+        // Espera 7 segundos en la pantalla Splash
+        delay(7000)
+        navController.navigate("frases") {
+            popUpTo("splash") { inclusive = true }
+        }
+
+        // Espera 10 segundos en la pantalla de Frases
+        delay(10000)
+        navController.navigate("login") {
+            popUpTo("frases") { inclusive = true }
+        }
+
+}
 
 @Composable
 fun AppNavigator() {
@@ -35,6 +51,7 @@ fun AppNavigator() {
     when (currentScreen) {
         "main" -> MainScreen(onEntrarClick = { currentScreen = "login" }) // 👈 cambia a login
         "login" -> PantallaLogin()
+        "frases" -> FrasesScreen()
     }
 }
 
